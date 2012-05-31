@@ -6,7 +6,7 @@ using Tinkerforge;
 
 namespace AutonomousVehicle.SenseAndAct
 {
-    class RadialDistanceSensor : IDisposable
+    public class RadialDistanceSensor : IDisposable
     {
         private enum TraversalDirection
         {
@@ -57,8 +57,8 @@ namespace AutonomousVehicle.SenseAndAct
             }
 
             ServoBrick.PositionReached += OnPositionReached;
-            ServoBrick.SetPosition(ServoId, leftLimit);
             ServoBrick.Enable(ServoId);
+            ServoBrick.SetPosition(ServoId, leftLimit);
         }
 
         private void OnPositionReached(byte servoId, short position)
@@ -86,6 +86,7 @@ namespace AutonomousVehicle.SenseAndAct
             if (NextMeasure == null)
             {
                 Direction = (Direction == TraversalDirection.Left) ? TraversalDirection.Right : TraversalDirection.Left;
+                NextMeasure = currentMeasure;
                 ContinueTraversal();
                 return;
             }
