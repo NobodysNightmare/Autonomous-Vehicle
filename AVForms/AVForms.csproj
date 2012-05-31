@@ -44,7 +44,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RadialDistanceMapForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RadialDistanceMapForm.Designer.cs">
+      <DependentUpon>RadialDistanceMapForm.cs</DependentUpon>
+    </Compile>
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="RadialDistanceMapForm.resx">
+      <DependentUpon>RadialDistanceMapForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AVSenseAndAct\AVSenseAndAct.csproj">
+      <Project>{BB7AE1D2-AF21-4C84-9B06-E9AD2E858507}</Project>
+      <Name>AVSenseAndAct</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
