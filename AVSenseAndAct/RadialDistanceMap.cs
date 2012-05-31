@@ -42,7 +42,9 @@ namespace AutonomousVehicle.SenseAndAct
                 if (angle == minimumAngle)
                     Left = currentMeasure;
             }
-            var Right = new RadialDistanceMeasure(maximumAngle);
+            Right = new RadialDistanceMeasure(maximumAngle);
+            if (Left == null)
+                Left = Right;
             Right.defineLeftNeighbour(lastMeasure);
         }
 

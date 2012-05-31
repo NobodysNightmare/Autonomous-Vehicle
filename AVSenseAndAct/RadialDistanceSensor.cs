@@ -6,13 +6,13 @@ using Tinkerforge;
 
 namespace AutonomousVehicle.SenseAndAct
 {
-    private enum TraversalDirection
-    {
-        Left, Right
-    }
-
     class RadialDistanceSensor : IDisposable
     {
+        private enum TraversalDirection
+        {
+            Left, Right
+        }
+
         public RadialDistanceMap Measurements { get; private set; }
 
         private BrickServo ServoBrick;
@@ -41,11 +41,22 @@ namespace AutonomousVehicle.SenseAndAct
 
         private void SetupServo()
         {
-            short leftLimit = ConvertToServoAngle(Measurements.Left.Angle);
-            short rightLimit = ConvertToServoAngle(Measurements.Right.Angle);
-            ServoBrick.SetDegree(ServoId, leftLimit, rightLimit);
+            short leftLimit, rightLimit;
+            ServoBrick.GetDegree(ServoId, out leftLimit, out rightLimit);
+            if (leftLimit > ConvertToServoAngle(Measurements.Left.Angle))
+            {
+                throw new ArgumentOutOfRangeException("servoBrick",
+                            string.Format("The servos minimum angle needs to be at least {0}°, but was set to {1}°.",
+                                Measurements.Left.Angle, ConvertFromServoAngle(leftLimit)));
+            }
+            if(rightLimit < ConvertToServoAngle(Measurements.Right.Angle))
+            {
+                throw new ArgumentOutOfRangeException("servoBrick",
+                            string.Format("The servos maximum angle needs to be at least {0}°, but was set to {1}°.",
+                                Measurements.Right.Angle, ConvertFromServoAngle(rightLimit)));
+            }
 
-            ServoBrick.RegisterCallback(new BrickServo.PositionReached(OnPositionReached));
+            ServoBrick.PositionReached += OnPositionReached;
             ServoBrick.SetPosition(ServoId, leftLimit);
             ServoBrick.Enable(ServoId);
         }
@@ -91,6 +102,11 @@ namespace AutonomousVehicle.SenseAndAct
         private static short ConvertToServoAngle(double angleInDegrees)
         {
             return (short)(angleInDegrees * 100);
+        }
+
+        private static double ConvertFromServoAngle(short servoAngle)
+        {
+            return servoAngle / 100.0;
         }
     }
 }
