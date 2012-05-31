@@ -34,6 +34,8 @@
             // radialDistanceMapForm1
             // 
             this.radialDistanceMapForm1.Location = new System.Drawing.Point(64, 67);
+            this.radialDistanceMapForm1.MaximumDistanceInMillimeters = 800;
+            this.radialDistanceMapForm1.MinimumDistanceInMillimeters = 70;
             this.radialDistanceMapForm1.Name = "radialDistanceMapForm1";
             this.radialDistanceMapForm1.Size = new System.Drawing.Size(153, 153);
             this.radialDistanceMapForm1.TabIndex = 0;
@@ -46,6 +48,7 @@
             this.Controls.Add(this.radialDistanceMapForm1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.ResumeLayout(false);
 
         }

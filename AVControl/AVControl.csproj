@@ -44,6 +44,10 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Tinkerforge, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdParty\Tinkerforge.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Form1.cs">
@@ -81,6 +85,10 @@
     <ProjectReference Include="..\AVForms\AVForms.csproj">
       <Project>{64411696-1BB4-4154-9ED5-E10645313436}</Project>
       <Name>AVForms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AVSenseAndAct\AVSenseAndAct.csproj">
+      <Project>{BB7AE1D2-AF21-4C84-9B06-E9AD2E858507}</Project>
+      <Name>AVSenseAndAct</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
