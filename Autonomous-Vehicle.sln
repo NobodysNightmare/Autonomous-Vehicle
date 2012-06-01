@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AVSenseAndAct", "AVSenseAndAct\AVSenseAndAct.csproj", "{BB7AE1D2-AF21-4C84-9B06-E9AD2E858507}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AVLab", "AVLab\AVLab.csproj", "{EBE10CC7-A0DB-4B82-B21C-6837C9AD992B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AVControl", "AVControl\AVControl.csproj", "{63F8DE2D-A345-4DFF-A8DE-D97A4F79A3B4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AVForms", "AVForms\AVForms.csproj", "{64411696-1BB4-4154-9ED5-E10645313436}"
@@ -37,16 +35,6 @@ Global
 		{BB7AE1D2-AF21-4C84-9B06-E9AD2E858507}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{BB7AE1D2-AF21-4C84-9B06-E9AD2E858507}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{BB7AE1D2-AF21-4C84-9B06-E9AD2E858507}.Release|x86.ActiveCfg = Release|Any CPU
-		{EBE10CC7-A0DB-4B82-B21C-6837C9AD992B}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{EBE10CC7-A0DB-4B82-B21C-6837C9AD992B}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{EBE10CC7-A0DB-4B82-B21C-6837C9AD992B}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{EBE10CC7-A0DB-4B82-B21C-6837C9AD992B}.Debug|x86.ActiveCfg = Debug|x86
-		{EBE10CC7-A0DB-4B82-B21C-6837C9AD992B}.Debug|x86.Build.0 = Debug|x86
-		{EBE10CC7-A0DB-4B82-B21C-6837C9AD992B}.Release|Any CPU.ActiveCfg = Release|x86
-		{EBE10CC7-A0DB-4B82-B21C-6837C9AD992B}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{EBE10CC7-A0DB-4B82-B21C-6837C9AD992B}.Release|Mixed Platforms.Build.0 = Release|x86
-		{EBE10CC7-A0DB-4B82-B21C-6837C9AD992B}.Release|x86.ActiveCfg = Release|x86
-		{EBE10CC7-A0DB-4B82-B21C-6837C9AD992B}.Release|x86.Build.0 = Release|x86
 		{63F8DE2D-A345-4DFF-A8DE-D97A4F79A3B4}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{63F8DE2D-A345-4DFF-A8DE-D97A4F79A3B4}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{63F8DE2D-A345-4DFF-A8DE-D97A4F79A3B4}.Debug|Mixed Platforms.Build.0 = Debug|x86
