@@ -20,12 +20,27 @@ namespace AutonomousVehicle.UserControls
         private Point Center;
         private int Radius;
 
+        private double SensorAngle;
+        private bool IndicateSensorAngle;
+
         public RadialDistanceMapForm()
         {
             InitializeComponent();
             DistanceMap = new RadialDistanceMap(0, 0, 1);
             MinimumDistanceInMillimeters = 70;
             MaximumDistanceInMillimeters = 800;
+        }
+
+        public void EnableSensorIndicator(RadialDistanceSensor  sensor)
+        {
+            sensor.UpdatedMeasure += SensorAngleUpdated;
+            IndicateSensorAngle = true;
+        }
+
+        void SensorAngleUpdated(object sender, UpdatedMeasureEventArgs e)
+        {
+            SensorAngle = e.Measure.Angle;
+            Invalidate();
         }
 
         private void RadialDistanceMapForm_Paint(object sender, PaintEventArgs e)
@@ -48,6 +63,11 @@ namespace AutonomousVehicle.UserControls
                     e.Graphics.DrawLine(Pens.Black, lastPosition, currentPosition);
                 }
                 lastPosition = currentPosition;
+            }
+
+            if (IndicateSensorAngle)
+            {
+                e.Graphics.DrawLine(Pens.Blue, Center, GetPolarPosition(SensorAngle, MaximumDistanceInMillimeters));
             }
         }
 

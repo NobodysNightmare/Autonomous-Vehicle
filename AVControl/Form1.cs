@@ -32,6 +32,7 @@ namespace AVControl
 
             DistanceMapForm.DistanceMap = new RadialDistanceMap(-45, 45, 1);
             Sensor = new RadialDistanceSensor(DistanceMapForm.DistanceMap, servo, 2, distBricklet);
+            DistanceMapForm.EnableSensorIndicator(Sensor);
 
             DrivingStrategy = new SimpleDistanceDrivingStrategy(servo, 0, DistanceMapForm.DistanceMap);
         }

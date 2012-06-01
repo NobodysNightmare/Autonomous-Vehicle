@@ -15,6 +15,8 @@ namespace AutonomousVehicle.SenseAndAct
 
         public RadialDistanceMap Measurements { get; private set; }
 
+        public event UpdatedMeasureEventHandler UpdatedMeasure;
+
         private BrickServo ServoBrick;
         private byte ServoId;
         private BrickletDistanceIR DistanceSensor;
@@ -56,12 +58,12 @@ namespace AutonomousVehicle.SenseAndAct
                                 Measurements.Right.Angle, ConvertFromServoAngle(rightLimit)));
             }
 
-            ServoBrick.PositionReached += OnPositionReached;
+            ServoBrick.PositionReached += ServoApproached;
             ServoBrick.Enable(ServoId);
             ServoBrick.SetPosition(ServoId, leftLimit);
         }
 
-        private void OnPositionReached(byte servoId, short position)
+        private void ServoApproached(byte servoId, short position)
         {
             if (servoId != ServoId)
                 return;
@@ -71,8 +73,10 @@ namespace AutonomousVehicle.SenseAndAct
 
         private void PerformMeasurement()
         {
-            NextMeasure.DistanceInMillimeters = DistanceSensor.GetDistance();
+            var measure = NextMeasure;
+            measure.DistanceInMillimeters = DistanceSensor.GetDistance();
             ContinueTraversal();
+            OnUpdatedMeasure(new UpdatedMeasureEventArgs(measure));
         }
 
         private void ContinueTraversal()
@@ -94,6 +98,13 @@ namespace AutonomousVehicle.SenseAndAct
             ServoBrick.SetPosition(ServoId, ConvertToServoAngle(NextMeasure.Angle));
         }
 
+        protected void OnUpdatedMeasure(UpdatedMeasureEventArgs eventArgs)
+        {
+            var handler = UpdatedMeasure;
+            if (handler != null)
+                handler(this, eventArgs);
+        }
+
         public void Dispose()
         {
             if (ServoBrick != null)
@@ -108,6 +119,18 @@ namespace AutonomousVehicle.SenseAndAct
         private static double ConvertFromServoAngle(short servoAngle)
         {
             return servoAngle / 100.0;
+        }
+    }
+
+    public delegate void UpdatedMeasureEventHandler(object sender, UpdatedMeasureEventArgs e);
+
+    public class UpdatedMeasureEventArgs : EventArgs
+    {
+        public RadialDistanceMeasure Measure { get; private set; }
+
+        public UpdatedMeasureEventArgs(RadialDistanceMeasure measure)
+        {
+            Measure = measure;
         }
     }
 }
