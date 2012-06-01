@@ -30,6 +30,14 @@ namespace AutonomousVehicle.SenseAndAct
         public RadialDistanceMeasure Left { get; private set; }
         public RadialDistanceMeasure Right { get; private set; }
 
+        public int ClosestDistanceInMillimeters
+        {
+            get
+            {
+                return this.Min(measure => measure.DistanceInMillimeters);
+            }
+        }
+
         public RadialDistanceMap(double minimumAngle, double maximumAngle, double stepSize)
         {
             RadialDistanceMeasure lastMeasure = null;
