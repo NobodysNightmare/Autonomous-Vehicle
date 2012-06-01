@@ -27,8 +27,8 @@ namespace AVControl
             Connection.AddDevice(servo);
             Connection.AddDevice(distBricklet);
 
-            servo.SetDegree(0, -9000, 9000);
-            servo.SetVelocity(0, 2000);
+            servo.SetDegree(2, -9000, 9000);
+            servo.SetVelocity(2, 2000);
 
             DistanceMapForm.DistanceMap = new RadialDistanceMap(-45, 45, 1);
             Sensor = new RadialDistanceSensor(DistanceMapForm.DistanceMap, servo, 2, distBricklet);
