@@ -49,7 +49,10 @@ namespace AutonomousVehicle.UserControls
             e.Graphics.FillEllipse(Brushes.White, BoundingRect);
 
             e.Graphics.FillPie(Brushes.Green, BoundingRect, (float)DistanceMap.Left.Angle - 90, (float)(DistanceMap.Right.Angle - DistanceMap.Left.Angle));
-            //TODO: fill white pie tp display minimum distance
+
+            //minimum distance
+            int minimumDistanceOffset = (int)getRadialDistanceFromMillimeters(MinimumDistanceInMillimeters);
+            e.Graphics.FillEllipse(Brushes.White, Center.X - minimumDistanceOffset, Center.Y - minimumDistanceOffset, 2 * minimumDistanceOffset, 2 * minimumDistanceOffset);
 
             //border
             e.Graphics.DrawEllipse(Pens.Black, BoundingRect);
@@ -82,10 +85,16 @@ namespace AutonomousVehicle.UserControls
         private Point GetPolarPosition(double angleInDegrees, int distance)
         {
             double radianAngle = Math.PI * angleInDegrees / 180.0;
-            double relativeDistance = (double)distance / MaximumDistanceInMillimeters;
-            relativeDistance = Math.Min(1.0, Math.Max(0.0, relativeDistance));
+            var radialDistance = getRadialDistanceFromMillimeters(distance);
 
-            return new Point(Center.X + (int)Math.Round(Math.Sin(radianAngle) * Radius * relativeDistance), Center.Y - (int)Math.Round(Math.Cos(radianAngle) * Radius * relativeDistance));
+            return new Point(Center.X + (int)Math.Round(Math.Sin(radianAngle) * radialDistance), Center.Y - (int)Math.Round(Math.Cos(radianAngle) * radialDistance));
+        }
+
+        private double getRadialDistanceFromMillimeters(int distanceInMillimeters)
+        {
+            double relativeDistance = (double)distanceInMillimeters / MaximumDistanceInMillimeters;
+            relativeDistance = Math.Min(1.0, Math.Max(0.0, relativeDistance));
+            return relativeDistance * Radius;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
