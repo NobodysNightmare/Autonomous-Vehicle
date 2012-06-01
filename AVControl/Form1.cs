@@ -15,6 +15,7 @@ namespace AVControl
     {
         private RadialDistanceSensor Sensor;
         private IPConnection Connection;
+        private SimpleDistanceDrivingStrategy DrivingStrategy;
 
         public Form1()
         {
@@ -29,14 +30,26 @@ namespace AVControl
             servo.SetDegree(0, -9000, 9000);
             servo.SetVelocity(0, 2000);
 
-            var map = new RadialDistanceMap(-45, 45, 1);
-            this.radialDistanceMapForm1.DistanceMap = map;
-            Sensor = new RadialDistanceSensor(map, servo, 0, distBricklet);
+            DistanceMapForm.DistanceMap = new RadialDistanceMap(-45, 45, 1);
+            Sensor = new RadialDistanceSensor(DistanceMapForm.DistanceMap, servo, 2, distBricklet);
+
+            DrivingStrategy = new SimpleDistanceDrivingStrategy(servo, 0, DistanceMapForm.DistanceMap);
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
+            DrivingStrategy.Stop();
             Connection.Destroy();
+        }
+
+        private void StartButton_Click(object sender, EventArgs e)
+        {
+            DrivingStrategy.Start();
+        }
+
+        private void StopButton_Click(object sender, EventArgs e)
+        {
+            DrivingStrategy.Stop();
         }
     }
 }

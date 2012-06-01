@@ -7,7 +7,7 @@ using System.Timers;
 
 namespace AutonomousVehicle.SenseAndAct
 {
-    class SimpleDistanceDrivingStrategy
+    public class SimpleDistanceDrivingStrategy
     {
         public short ForwardVelocity { get; set; }
         public short StopVelocity { get; set; }
