@@ -16,25 +16,26 @@ namespace AVControl
         private RadialDistanceSensor Sensor;
         private IPConnection Connection;
         private SimpleDistanceDrivingStrategy DrivingStrategy;
+        private BrickServo ServoBrick;
 
         public Form1()
         {
             InitializeComponent();
 
-            var servo = new BrickServo("ap6zRki6edN");
+            ServoBrick = new BrickServo("ap6zRki6edN");
             var distBricklet = new BrickletDistanceIR("8XU");
             Connection = new IPConnection("localhost", 4223);
-            Connection.AddDevice(servo);
+            Connection.AddDevice(ServoBrick);
             Connection.AddDevice(distBricklet);
 
-            servo.SetDegree(2, -9000, 9000);
-            servo.SetVelocity(2, 2000);
+            ServoBrick.SetDegree(0, -4500, 4500);
+            ServoBrick.SetVelocity(0, 40000);
 
             DistanceMapForm.DistanceMap = new RadialDistanceMap(-45, 45, 1);
-            Sensor = new RadialDistanceSensor(DistanceMapForm.DistanceMap, servo, 2, distBricklet);
+            Sensor = new RadialDistanceSensor(DistanceMapForm.DistanceMap, ServoBrick, 0, distBricklet);
             DistanceMapForm.EnableSensorIndicator(Sensor);
 
-            DrivingStrategy = new SimpleDistanceDrivingStrategy(servo, 0, DistanceMapForm.DistanceMap);
+            DrivingStrategy = new SimpleDistanceDrivingStrategy(ServoBrick, 1, DistanceMapForm.DistanceMap);
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -51,6 +52,11 @@ namespace AVControl
         private void StopButton_Click(object sender, EventArgs e)
         {
             DrivingStrategy.Stop();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            VoltageLabel.Text = string.Format("{0} mV", ServoBrick.GetExternalInputVoltage());
         }
     }
 }
