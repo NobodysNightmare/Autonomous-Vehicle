@@ -51,7 +51,7 @@ namespace AutonomousVehicle.SenseAndAct
             StopVelocity = 0;
             ReverseVelocity = -100;
             MinimumDrivingDistance = 120;
-            ReversalDistance = 0;
+            ReversalDistance = 800;
         }
 
         public void Start()

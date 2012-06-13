@@ -31,11 +31,17 @@ namespace AVControl
             ServoBrick.SetDegree(0, -4500, 4500);
             ServoBrick.SetVelocity(0, 40000);
 
+            ServoBrick.SetDegree(3, -500, 1000);
+            ServoBrick.SetVelocity(3, 40000);
+
             DistanceMapForm.DistanceMap = new RadialDistanceMap(-45, 45, 1);
             Sensor = new RadialDistanceSensor(DistanceMapForm.DistanceMap, ServoBrick, 0, distBricklet);
             DistanceMapForm.EnableSensorIndicator(Sensor);
 
-            DrivingStrategy = new SimpleDistanceDrivingStrategy(ServoBrick, 1, DistanceMapForm.DistanceMap);
+            DrivingStrategy = new SimpleDistanceDrivingStrategy(ServoBrick, 3, DistanceMapForm.DistanceMap);
+            DrivingStrategy.ForwardVelocity = 150;
+            DrivingStrategy.ReverseVelocity = -200;
+            DrivingStrategy.StopVelocity = 0;
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
