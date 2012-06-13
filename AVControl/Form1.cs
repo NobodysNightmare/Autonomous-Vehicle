@@ -42,6 +42,8 @@ namespace AVControl
             DrivingStrategy.ForwardVelocity = 150;
             DrivingStrategy.ReverseVelocity = -200;
             DrivingStrategy.StopVelocity = 0;
+            DrivingStrategy.MinimumDrivingDistance = 200;
+            DrivingStrategy.ReversalDistance = 100;
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)

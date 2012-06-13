@@ -41,7 +41,7 @@ namespace AutonomousVehicle.SenseAndAct
             ServoId = servoId;
             DistanceMap = distanceMap;
             InitializePropertyDefaults();
-            RefreshTimer = new Timer(1000);
+            RefreshTimer = new Timer(100);
             RefreshTimer.Elapsed += TakeDrivingDecisions;
         }
 
