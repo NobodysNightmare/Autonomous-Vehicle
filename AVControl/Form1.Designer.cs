@@ -36,6 +36,8 @@
             this.StartButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.CurrentLabel = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.VoltageLabel = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
@@ -104,6 +106,8 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.CurrentLabel);
+            this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(this.VoltageLabel);
             this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Location = new System.Drawing.Point(12, 13);
@@ -112,6 +116,24 @@
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Power";
+            // 
+            // CurrentLabel
+            // 
+            this.CurrentLabel.AutoSize = true;
+            this.CurrentLabel.Location = new System.Drawing.Point(71, 39);
+            this.CurrentLabel.Name = "CurrentLabel";
+            this.CurrentLabel.Size = new System.Drawing.Size(34, 13);
+            this.CurrentLabel.TabIndex = 6;
+            this.CurrentLabel.Text = "--- mA";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 39);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(44, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Current:";
             // 
             // VoltageLabel
             // 
@@ -158,6 +180,8 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label VoltageLabel;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label CurrentLabel;
+        private System.Windows.Forms.Label label3;
     }
 }
 

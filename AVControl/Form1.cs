@@ -36,10 +36,14 @@ namespace AVControl
             ServoBrick.SetVelocity(3, 40000);
 
             DistanceMapForm.DistanceMap = new RadialDistanceMap(-45, 45, 1);
-            Sensor = new RadialDistanceSensor(DistanceMapForm.DistanceMap, ServoBrick, 0, distBricklet);
-            DistanceMapForm.EnableSensorIndicator(Sensor);
+            //Sensor = new RadialDistanceSensor(DistanceMapForm.DistanceMap, ServoBrick, 0, distBricklet);
+            //DistanceMapForm.EnableSensorIndicator(Sensor);
 
-            DrivingStrategy = new SimpleDistanceDrivingStrategy(ServoBrick, 3, DistanceMapForm.DistanceMap);
+            //var distances = DistanceMapForm.DistanceMap;
+            var distances = new ImmediateDistanceSensorCollection();
+            distances.AddSensor(distBricklet);
+
+            DrivingStrategy = new SimpleDistanceDrivingStrategy(ServoBrick, 3, distances);
             DrivingStrategy.ForwardVelocity = 150;
             DrivingStrategy.ReverseVelocity = -200;
             DrivingStrategy.StopVelocity = 0;
@@ -66,6 +70,7 @@ namespace AVControl
         private void timer1_Tick(object sender, EventArgs e)
         {
             VoltageLabel.Text = string.Format("{0} mV", ServoBrick.GetExternalInputVoltage());
+            CurrentLabel.Text = string.Format("{0} mA", ServoBrick.GetOverallCurrent());
         }
     }
 }
