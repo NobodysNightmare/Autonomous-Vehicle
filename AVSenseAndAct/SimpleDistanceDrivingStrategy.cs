@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Tinkerforge;
 using System.Timers;
+using AutonomousVehicle.SenseAndAct.Distance;
 
 namespace AutonomousVehicle.SenseAndAct
 {
@@ -29,17 +30,17 @@ namespace AutonomousVehicle.SenseAndAct
 
         private BrickServo ServoBrick;
         private byte ServoId;
-        private RadialDistanceMap DistanceMap;
+        private IDistanceCollection Distances;
 
         private Timer RefreshTimer;
 
         private int CurrentTargetVelocity;
 
-        public SimpleDistanceDrivingStrategy(BrickServo servoBrick, byte servoId, RadialDistanceMap distanceMap)
+        public SimpleDistanceDrivingStrategy(BrickServo servoBrick, byte servoId, IDistanceCollection distances)
         {
             ServoBrick = servoBrick;
             ServoId = servoId;
-            DistanceMap = distanceMap;
+            Distances = distances;
             InitializePropertyDefaults();
             RefreshTimer = new Timer(100);
             RefreshTimer.Elapsed += TakeDrivingDecisions;
@@ -70,7 +71,7 @@ namespace AutonomousVehicle.SenseAndAct
 
         private void TakeDrivingDecisions(object sender, ElapsedEventArgs e)
         {
-            var distance = DistanceMap.ClosestDistanceInMillimeters;
+            var distance = Distances.ClosestDistanceInMillimeters;
 
             if (distance >= MinimumDrivingDistance)
             {

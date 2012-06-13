@@ -43,9 +43,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Distance\IDistanceCollection.cs" />
+    <Compile Include="Distance\SimpleDistanceCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RadialDistanceMap.cs" />
-    <Compile Include="RadialDistanceSensor.cs" />
+    <Compile Include="Distance\RadialDistanceMap.cs" />
+    <Compile Include="Distance\RadialDistanceSensor.cs" />
     <Compile Include="SimpleDistanceDrivingStrategy.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AutonomousVehicle.SenseAndAct
+namespace AutonomousVehicle.SenseAndAct.Distance
 {
     public class RadialDistanceMeasure
     {
@@ -25,7 +25,7 @@ namespace AutonomousVehicle.SenseAndAct
         }
     }
 
-    public class RadialDistanceMap : IEnumerable<RadialDistanceMeasure>
+    public class RadialDistanceMap : IEnumerable<RadialDistanceMeasure>, IDistanceCollection
     {
         public RadialDistanceMeasure Left { get; private set; }
         public RadialDistanceMeasure Right { get; private set; }
@@ -35,6 +35,14 @@ namespace AutonomousVehicle.SenseAndAct
             get
             {
                 return this.Min(measure => measure.DistanceInMillimeters);
+            }
+        }
+
+        public int FarthestDistanceInMillimeters
+        {
+            get
+            {
+                return this.Max(measure => measure.DistanceInMillimeters);
             }
         }
 

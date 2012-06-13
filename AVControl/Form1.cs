@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using AutonomousVehicle.SenseAndAct;
 using Tinkerforge;
+using AutonomousVehicle.SenseAndAct.Distance;
 
 namespace AVControl
 {

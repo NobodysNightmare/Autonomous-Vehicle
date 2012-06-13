@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Tinkerforge;
 
-namespace AutonomousVehicle.SenseAndAct
+namespace AutonomousVehicle.SenseAndAct.Distance
 {
     public class RadialDistanceSensor : IDisposable
     {

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using AutonomousVehicle.SenseAndAct;
+using AutonomousVehicle.SenseAndAct.Distance;
 
 namespace AutonomousVehicle.UserControls
 {
