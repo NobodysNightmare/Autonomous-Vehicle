@@ -17,7 +17,7 @@ namespace AVControl
     {
         private RadialDistanceSensor Sensor;
         private IPConnection Connection;
-        private SimpleDistanceDrivingStrategy DrivingStrategy;
+        private IDrivingStrategy DrivingStrategy;
         private BrickServo ServoBrick;
 
         public Form1()
@@ -44,12 +44,13 @@ namespace AVControl
             var distances = new ImmediateDistanceSensorCollection();
             distances.AddSensor(distBricklet);
 
-            DrivingStrategy = new SimpleDistanceDrivingStrategy(ServoBrick, 3, distances);
-            DrivingStrategy.ForwardVelocity = 150;
-            DrivingStrategy.ReverseVelocity = -200;
-            DrivingStrategy.StopVelocity = 0;
-            DrivingStrategy.MinimumDrivingDistance = 200;
-            DrivingStrategy.ReversalDistance = 100;
+            var drivingStrategy = new SimpleDistanceDrivingStrategy(ServoBrick, 3, distances);
+            drivingStrategy.ForwardVelocity = 150;
+            drivingStrategy.ReverseVelocity = -200;
+            drivingStrategy.StopVelocity = 0;
+            drivingStrategy.MinimumDrivingDistance = 200;
+            drivingStrategy.ReversalDistance = 100;
+            this.DrivingStrategy = drivingStrategy;
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)

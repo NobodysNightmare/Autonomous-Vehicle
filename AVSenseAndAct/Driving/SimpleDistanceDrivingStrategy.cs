@@ -8,7 +8,7 @@ using AutonomousVehicle.SenseAndAct.Distance;
 
 namespace AutonomousVehicle.SenseAndAct.Driving
 {
-    public class SimpleDistanceDrivingStrategy
+    public class SimpleDistanceDrivingStrategy : IDrivingStrategy
     {
         public short ForwardVelocity { get; set; }
         public short StopVelocity { get; set; }
