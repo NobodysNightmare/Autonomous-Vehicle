@@ -6,7 +6,7 @@ using Tinkerforge;
 using System.Timers;
 using AutonomousVehicle.SenseAndAct.Distance;
 
-namespace AutonomousVehicle.SenseAndAct
+namespace AutonomousVehicle.SenseAndAct.Driving
 {
     public class SimpleDistanceDrivingStrategy
     {

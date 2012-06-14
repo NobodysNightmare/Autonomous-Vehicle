@@ -48,7 +48,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Distance\RadialDistanceMap.cs" />
     <Compile Include="Distance\RadialDistanceSensor.cs" />
-    <Compile Include="SimpleDistanceDrivingStrategy.cs" />
+    <Compile Include="Driving\SimpleDistanceDrivingStrategy.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
