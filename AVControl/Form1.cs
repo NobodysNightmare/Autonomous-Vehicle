@@ -44,11 +44,11 @@ namespace AVControl
             var distances = new ImmediateDistanceSensorCollection();
             distances.AddSensor(distBricklet);
 
-            var drivingStrategy = new SimpleDistanceDrivingStrategy(ServoBrick, 3, distances);
-            drivingStrategy.ForwardVelocity = 150;
-            drivingStrategy.ReverseVelocity = -200;
-            drivingStrategy.StopVelocity = 0;
-            drivingStrategy.MinimumDrivingDistance = 200;
+            var engine = new SimpleServoEngine(ServoBrick, 3);
+            engine.MaximumForwardSpeed = 150;
+            engine.MaximumBackwardSpeed = -175;
+            var drivingStrategy = new SimpleDistanceDrivingStrategy(engine, distances);
+            drivingStrategy.MinimumDrivingDistance = 300;
             drivingStrategy.ReversalDistance = 100;
             this.DrivingStrategy = drivingStrategy;
         }

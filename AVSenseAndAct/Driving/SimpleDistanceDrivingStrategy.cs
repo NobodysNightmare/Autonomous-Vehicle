@@ -10,9 +10,8 @@ namespace AutonomousVehicle.SenseAndAct.Driving
 {
     public class SimpleDistanceDrivingStrategy : IDrivingStrategy
     {
-        public short ForwardVelocity { get; set; }
-        public short StopVelocity { get; set; }
-        public short ReverseVelocity { get; set; }
+        public double ForwardVelocity { get; set; }
+        public double ReverseVelocity { get; set; }
         public int MinimumDrivingDistance { get; set; }
         public int ReversalDistance { get; set; }
 
@@ -28,18 +27,14 @@ namespace AutonomousVehicle.SenseAndAct.Driving
             }
         }
 
-        private BrickServo ServoBrick;
-        private byte ServoId;
+        private IEngine Engine;
         private IDistanceCollection Distances;
 
         private Timer RefreshTimer;
 
-        private int CurrentTargetVelocity;
-
-        public SimpleDistanceDrivingStrategy(BrickServo servoBrick, byte servoId, IDistanceCollection distances)
+        public SimpleDistanceDrivingStrategy(IEngine engine, IDistanceCollection distances)
         {
-            ServoBrick = servoBrick;
-            ServoId = servoId;
+            Engine = engine;
             Distances = distances;
             InitializePropertyDefaults();
             RefreshTimer = new Timer(100);
@@ -48,25 +43,24 @@ namespace AutonomousVehicle.SenseAndAct.Driving
 
         private void InitializePropertyDefaults()
         {
-            ForwardVelocity = 200;
-            StopVelocity = 0;
-            ReverseVelocity = -100;
+            ForwardVelocity = 1.0;
+            ReverseVelocity = 1.0;
             MinimumDrivingDistance = 120;
-            ReversalDistance = 800;
+            ReversalDistance = 0;
         }
 
         public void Start()
         {
-            SetVelocity(StopVelocity);
-            ServoBrick.Enable(ServoId);
+            StopDriving();
+            Engine.IsEnabled = true;
             RefreshTimer.Enabled = true;
         }
 
         public void Stop()
         {
             RefreshTimer.Enabled = false;
-            SetVelocity(StopVelocity); //FIXME: race-condition with timer (timer could still restart motor in its last tick)
-            ServoBrick.Disable(ServoId);
+            StopDriving();
+            Engine.IsEnabled = false;
         }
 
         private void TakeDrivingDecisions(object sender, ElapsedEventArgs e)
@@ -89,31 +83,19 @@ namespace AutonomousVehicle.SenseAndAct.Driving
 
         private void DriveForward()
         {
-            SetVelocityIfNeccessary(ForwardVelocity);
+            Engine.Direction = EngineDirection.Forward;
+            Engine.RelativeSpeed = ForwardVelocity;
         }
 
         private void DriveBackwards()
         {
-            SetVelocityIfNeccessary(ReverseVelocity);
+            Engine.Direction = EngineDirection.Backward;
+            Engine.RelativeSpeed = ReverseVelocity;
         }
 
         private void StopDriving()
         {
-            SetVelocityIfNeccessary(StopVelocity);
-        }
-
-        private void SetVelocityIfNeccessary(short targetVelocity)
-        {
-            if (CurrentTargetVelocity != targetVelocity)
-            {
-                SetVelocity(targetVelocity);
-            }
-        }
-
-        private void SetVelocity(short targetVelocity)
-        {
-            ServoBrick.SetPosition(ServoId, targetVelocity);
-            CurrentTargetVelocity = targetVelocity;
+            Engine.RelativeSpeed = 0.0;
         }
     }
 }
