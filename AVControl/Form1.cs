@@ -20,6 +20,8 @@ namespace AVControl
         private IDrivingStrategy DrivingStrategy;
         private BrickServo ServoBrick;
 
+        private IDistanceCollection Distances;
+
         public Form1()
         {
             InitializeComponent();
@@ -40,17 +42,20 @@ namespace AVControl
             //Sensor = new RadialDistanceSensor(DistanceMapForm.DistanceMap, ServoBrick, 0, distBricklet);
             //DistanceMapForm.EnableSensorIndicator(Sensor);
 
-            //var distances = DistanceMapForm.DistanceMap;
+            //Distances = DistanceMapForm.DistanceMap;
             var distances = new ImmediateDistanceSensorCollection();
             distances.AddSensor(distBricklet);
+            Distances = distances;
 
             var engine = new SimpleServoEngine(ServoBrick, 3);
             engine.MaximumForwardSpeed = 150;
-            engine.MaximumBackwardSpeed = -175;
+            engine.MaximumBackwardSpeed = -200;
+
             var drivingStrategy = new SimpleDistanceDrivingStrategy(engine, distances);
             drivingStrategy.MinimumDrivingDistance = 300;
-            drivingStrategy.ReversalDistance = 100;
+            drivingStrategy.ReversalDistance = 110;
             this.DrivingStrategy = drivingStrategy;
+            drivingStrategy.RefreshInterval = 50;
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -73,6 +78,7 @@ namespace AVControl
         {
             VoltageLabel.Text = string.Format("{0} mV", ServoBrick.GetExternalInputVoltage());
             CurrentLabel.Text = string.Format("{0} mA", ServoBrick.GetOverallCurrent());
+            MinDistanceLabel.Text = string.Format("{0} mm", Distances.ClosestDistanceInMillimeters);
         }
     }
 }

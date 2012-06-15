@@ -40,6 +40,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.VoltageLabel = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.MinDistanceLabel = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -47,6 +49,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.MinDistanceLabel);
+            this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.DistanceMapForm);
             this.groupBox1.Location = new System.Drawing.Point(12, 201);
             this.groupBox1.Name = "groupBox1";
@@ -150,6 +154,24 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // MinDistanceLabel
+            // 
+            this.MinDistanceLabel.AutoSize = true;
+            this.MinDistanceLabel.Location = new System.Drawing.Point(250, 159);
+            this.MinDistanceLabel.Name = "MinDistanceLabel";
+            this.MinDistanceLabel.Size = new System.Drawing.Size(35, 13);
+            this.MinDistanceLabel.TabIndex = 8;
+            this.MinDistanceLabel.Text = "--- mm";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(185, 159);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(41, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Closest";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -162,6 +184,7 @@
             this.Text = "Simple Vehicle Control";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
@@ -182,6 +205,8 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label CurrentLabel;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label MinDistanceLabel;
+        private System.Windows.Forms.Label label4;
     }
 }
 
