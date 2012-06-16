@@ -15,10 +15,10 @@ namespace AVControl
 {
     public partial class Form1 : Form
     {
-        private RadialDistanceSensor Sensor;
         private IPConnection Connection;
         private IDrivingStrategy DrivingStrategy;
         private BrickServo ServoBrick;
+        private BrickletDistanceIR DistanceBricklet;
 
         private IDistanceCollection Distances;
         private SimpleServoEngine Engine;
@@ -26,37 +26,68 @@ namespace AVControl
         public Form1()
         {
             InitializeComponent();
+            InitializeDevices();
+        }
 
+        private void InitializeDevices()
+        {
             ServoBrick = new BrickServo("ap6zRki6edN");
-            var distBricklet = new BrickletDistanceIR("8XU");
+            DistanceBricklet = new BrickletDistanceIR("8XU");
             Connection = new IPConnection("localhost", 4223);
-            Connection.AddDevice(ServoBrick);
-            Connection.AddDevice(distBricklet);
+            try
+            {
+                Connection.AddDevice(ServoBrick);
+                SetupServoBrick();
+            }
+            catch (Tinkerforge.TimeoutException)
+            {
+                //TODO: fallback-setup
+            }
 
+            try
+            {
+                Connection.AddDevice(DistanceBricklet);
+                SetupDistanceBricklet();
+            }
+            catch (Tinkerforge.TimeoutException)
+            {
+                //TODO: fallback-setup
+            }
+
+            var drivingStrategy = new SimpleDistanceDrivingStrategy(Engine, Distances);
+            drivingStrategy.MinimumDrivingDistance = 300;
+            drivingStrategy.ReversalDistance = 110;
+            this.DrivingStrategy = drivingStrategy;
+            drivingStrategy.RefreshInterval = 50;
+        }
+
+        private void SetupServoBrick()
+        {
             ServoBrick.SetDegree(0, -4500, 4500);
             ServoBrick.SetVelocity(0, 40000);
 
             ServoBrick.SetDegree(3, -500, 1000);
             ServoBrick.SetVelocity(3, 40000);
 
-            DistanceMapForm.DistanceMap = new RadialDistanceMap(-45, 45, 1);
-            //Sensor = new RadialDistanceSensor(DistanceMapForm.DistanceMap, ServoBrick, 0, distBricklet);
-            //DistanceMapForm.EnableSensorIndicator(Sensor);
-
-            //Distances = DistanceMapForm.DistanceMap;
-            var distances = new ImmediateDistanceSensorCollection();
-            distances.AddSensor(distBricklet);
-            Distances = distances;
-
             Engine = new SimpleServoEngine(ServoBrick, 3);
             Engine.MaximumForwardSpeed = (short)ForwardSpeedBar.Value;
             Engine.MaximumBackwardSpeed = (short)-BackwardSpeedBar.Value;
+            StartButton.Enabled = true;
+            StopButton.Enabled = true;
+            ForwardSpeedBar.Enabled = true;
+            BackwardSpeedBar.Enabled = true;
+        }
 
-            var drivingStrategy = new SimpleDistanceDrivingStrategy(Engine, distances);
-            drivingStrategy.MinimumDrivingDistance = 300;
-            drivingStrategy.ReversalDistance = 110;
-            this.DrivingStrategy = drivingStrategy;
-            drivingStrategy.RefreshInterval = 50;
+        private void SetupDistanceBricklet()
+        {
+            //DistanceMapForm.DistanceMap = new RadialDistanceMap(-45, 45, 1);
+            //var sensor = new RadialDistanceSensor(DistanceMapForm.DistanceMap, ServoBrick, 0, distBricklet);
+            //DistanceMapForm.EnableSensorIndicator(sensor);
+
+            //Distances = DistanceMapForm.DistanceMap;
+            var distances = new ImmediateDistanceSensorCollection();
+            distances.AddSensor(DistanceBricklet);
+            Distances = distances;
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
