@@ -49,8 +49,8 @@ namespace AVControl
             Distances = distances;
 
             Engine = new SimpleServoEngine(ServoBrick, 3);
-            Engine.MaximumForwardSpeed = 150;
-            Engine.MaximumBackwardSpeed = -200;
+            Engine.MaximumForwardSpeed = (short)ForwardSpeedBar.Value;
+            Engine.MaximumBackwardSpeed = (short)-BackwardSpeedBar.Value;
 
             var drivingStrategy = new SimpleDistanceDrivingStrategy(Engine, distances);
             drivingStrategy.MinimumDrivingDistance = 300;
