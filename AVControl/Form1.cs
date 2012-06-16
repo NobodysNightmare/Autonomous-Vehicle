@@ -10,6 +10,7 @@ using AutonomousVehicle.SenseAndAct;
 using Tinkerforge;
 using AutonomousVehicle.SenseAndAct.Distance;
 using AutonomousVehicle.SenseAndAct.Driving;
+using AutonomousVehicle.GUI;
 
 namespace AVControl
 {
@@ -41,7 +42,7 @@ namespace AVControl
             }
             catch (Tinkerforge.TimeoutException)
             {
-                //TODO: fallback-setup
+                //TODO: some kind of dummy servo-brick would be neat
             }
 
             try
@@ -51,7 +52,7 @@ namespace AVControl
             }
             catch (Tinkerforge.TimeoutException)
             {
-                //TODO: fallback-setup
+                Distances = new DummyDistanceCollection();
             }
 
             var drivingStrategy = new SimpleDistanceDrivingStrategy(Engine, Distances);
