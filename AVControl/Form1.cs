@@ -21,6 +21,7 @@ namespace AVControl
         private BrickServo ServoBrick;
 
         private IDistanceCollection Distances;
+        private SimpleServoEngine Engine;
 
         public Form1()
         {
@@ -47,11 +48,11 @@ namespace AVControl
             distances.AddSensor(distBricklet);
             Distances = distances;
 
-            var engine = new SimpleServoEngine(ServoBrick, 3);
-            engine.MaximumForwardSpeed = 150;
-            engine.MaximumBackwardSpeed = -200;
+            Engine = new SimpleServoEngine(ServoBrick, 3);
+            Engine.MaximumForwardSpeed = 150;
+            Engine.MaximumBackwardSpeed = -200;
 
-            var drivingStrategy = new SimpleDistanceDrivingStrategy(engine, distances);
+            var drivingStrategy = new SimpleDistanceDrivingStrategy(Engine, distances);
             drivingStrategy.MinimumDrivingDistance = 300;
             drivingStrategy.ReversalDistance = 110;
             this.DrivingStrategy = drivingStrategy;
@@ -79,6 +80,18 @@ namespace AVControl
             VoltageLabel.Text = string.Format("{0} mV", ServoBrick.GetExternalInputVoltage());
             CurrentLabel.Text = string.Format("{0} mA", ServoBrick.GetOverallCurrent());
             MinDistanceLabel.Text = string.Format("{0} mm", Distances.ClosestDistanceInMillimeters);
+        }
+
+        private void ForwardSpeedBar_Scroll(object sender, EventArgs e)
+        {
+            ForwardSpeedLabel.Text = string.Format("{0} %", ForwardSpeedBar.Value / 10.0);
+            Engine.MaximumForwardSpeed = (short)ForwardSpeedBar.Value;
+        }
+
+        private void BackwardSpeedBar_Scroll(object sender, EventArgs e)
+        {
+            BackwardSpeedLabel.Text = string.Format("{0} %", BackwardSpeedBar.Value / 5.0);
+            Engine.MaximumBackwardSpeed = (short)-BackwardSpeedBar.Value;
         }
     }
 }

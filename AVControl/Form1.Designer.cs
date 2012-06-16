@@ -30,6 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.MinDistanceLabel = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.DistanceMapForm = new AutonomousVehicle.UserControls.RadialDistanceMapForm();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.StopButton = new System.Windows.Forms.Button();
@@ -40,11 +42,17 @@
             this.label3 = new System.Windows.Forms.Label();
             this.VoltageLabel = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.MinDistanceLabel = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.ForwardSpeedBar = new System.Windows.Forms.TrackBar();
+            this.ForwardSpeedLabel = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.BackwardSpeedLabel = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.BackwardSpeedBar = new System.Windows.Forms.TrackBar();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ForwardSpeedBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BackwardSpeedBar)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -59,6 +67,24 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Obstacles";
             // 
+            // MinDistanceLabel
+            // 
+            this.MinDistanceLabel.AutoSize = true;
+            this.MinDistanceLabel.Location = new System.Drawing.Point(250, 159);
+            this.MinDistanceLabel.Name = "MinDistanceLabel";
+            this.MinDistanceLabel.Size = new System.Drawing.Size(35, 13);
+            this.MinDistanceLabel.TabIndex = 8;
+            this.MinDistanceLabel.Text = "--- mm";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(185, 159);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(41, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Closest";
+            // 
             // DistanceMapForm
             // 
             this.DistanceMapForm.Location = new System.Drawing.Point(6, 19);
@@ -70,14 +96,20 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.BackwardSpeedLabel);
+            this.groupBox2.Controls.Add(this.label6);
+            this.groupBox2.Controls.Add(this.BackwardSpeedBar);
+            this.groupBox2.Controls.Add(this.ForwardSpeedLabel);
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.ForwardSpeedBar);
             this.groupBox2.Controls.Add(this.StopButton);
             this.groupBox2.Controls.Add(this.StartButton);
             this.groupBox2.Location = new System.Drawing.Point(497, 13);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 86);
+            this.groupBox2.Size = new System.Drawing.Size(200, 228);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Motor";
+            this.groupBox2.Text = "Engine";
             // 
             // StopButton
             // 
@@ -154,23 +186,65 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // MinDistanceLabel
+            // ForwardSpeedBar
             // 
-            this.MinDistanceLabel.AutoSize = true;
-            this.MinDistanceLabel.Location = new System.Drawing.Point(250, 159);
-            this.MinDistanceLabel.Name = "MinDistanceLabel";
-            this.MinDistanceLabel.Size = new System.Drawing.Size(35, 13);
-            this.MinDistanceLabel.TabIndex = 8;
-            this.MinDistanceLabel.Text = "--- mm";
+            this.ForwardSpeedBar.LargeChange = 50;
+            this.ForwardSpeedBar.Location = new System.Drawing.Point(6, 110);
+            this.ForwardSpeedBar.Maximum = 1000;
+            this.ForwardSpeedBar.Name = "ForwardSpeedBar";
+            this.ForwardSpeedBar.Size = new System.Drawing.Size(188, 45);
+            this.ForwardSpeedBar.SmallChange = 5;
+            this.ForwardSpeedBar.TabIndex = 2;
+            this.ForwardSpeedBar.TickFrequency = 50;
+            this.ForwardSpeedBar.Scroll += new System.EventHandler(this.ForwardSpeedBar_Scroll);
             // 
-            // label4
+            // ForwardSpeedLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(185, 159);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(41, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Closest";
+            this.ForwardSpeedLabel.AutoSize = true;
+            this.ForwardSpeedLabel.Location = new System.Drawing.Point(101, 142);
+            this.ForwardSpeedLabel.Name = "ForwardSpeedLabel";
+            this.ForwardSpeedLabel.Size = new System.Drawing.Size(33, 13);
+            this.ForwardSpeedLabel.TabIndex = 8;
+            this.ForwardSpeedLabel.Text = "0.0 %";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(3, 142);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(82, 13);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "Forward Speed:";
+            // 
+            // BackwardSpeedLabel
+            // 
+            this.BackwardSpeedLabel.AutoSize = true;
+            this.BackwardSpeedLabel.Location = new System.Drawing.Point(101, 204);
+            this.BackwardSpeedLabel.Name = "BackwardSpeedLabel";
+            this.BackwardSpeedLabel.Size = new System.Drawing.Size(33, 13);
+            this.BackwardSpeedLabel.TabIndex = 11;
+            this.BackwardSpeedLabel.Text = "0.0 %";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 204);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(92, 13);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "Backward Speed:";
+            // 
+            // BackwardSpeedBar
+            // 
+            this.BackwardSpeedBar.LargeChange = 25;
+            this.BackwardSpeedBar.Location = new System.Drawing.Point(6, 172);
+            this.BackwardSpeedBar.Maximum = 500;
+            this.BackwardSpeedBar.Name = "BackwardSpeedBar";
+            this.BackwardSpeedBar.Size = new System.Drawing.Size(188, 45);
+            this.BackwardSpeedBar.SmallChange = 5;
+            this.BackwardSpeedBar.TabIndex = 9;
+            this.BackwardSpeedBar.TickFrequency = 25;
+            this.BackwardSpeedBar.Scroll += new System.EventHandler(this.BackwardSpeedBar_Scroll);
             // 
             // Form1
             // 
@@ -186,8 +260,11 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ForwardSpeedBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BackwardSpeedBar)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -207,6 +284,12 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label MinDistanceLabel;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label ForwardSpeedLabel;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TrackBar ForwardSpeedBar;
+        private System.Windows.Forms.Label BackwardSpeedLabel;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TrackBar BackwardSpeedBar;
     }
 }
 
