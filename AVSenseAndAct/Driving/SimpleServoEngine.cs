@@ -67,8 +67,8 @@ namespace AutonomousVehicle.SenseAndAct.Driving
             ServoId = servoId;
 
             IsEnabled = false;
-
             InitializePropertyDefaults();
+            SetSpeed(0);
         }
 
         private void InitializePropertyDefaults()
