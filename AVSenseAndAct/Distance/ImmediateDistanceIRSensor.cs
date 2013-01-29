@@ -6,6 +6,10 @@ using Tinkerforge;
 
 namespace AutonomousVehicle.SenseAndAct.Distance
 {
+    /// <summary>
+    /// Provides immediate access to the current distance of a BrickletDistanceIR.
+    /// This means whenever the Distance is queried, this will result in a network call to the Bricklet.
+    /// </summary>
     public class ImmediateDistanceIRSensor : IDistanceSensor
     {
         private BrickletDistanceIR Bricklet;
