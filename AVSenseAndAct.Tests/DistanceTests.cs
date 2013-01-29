@@ -13,7 +13,7 @@ namespace AVSenseAndAct.Tests
         [TestMethod]
         public void ConversionTest()
         {
-            var distance = Distance.FromMillimeters(2000);
+            Distance distance = Distance.FromMillimeters(2000);
             Assert.AreEqual(2000, distance.InMillimeters);
             Assert.AreEqual(200, distance.InCentimeters);
             Assert.AreEqual(2, distance.InMeters);
@@ -28,9 +28,9 @@ namespace AVSenseAndAct.Tests
         }
 
         [TestMethod]
-        public void ComparisonTest()
+        public void EqualityTest()
         {
-            var referenceDistance = Distance.FromMillimeters(42);
+            Distance referenceDistance = Distance.FromMillimeters(42);
             Assert.AreEqual(referenceDistance, Distance.FromMillimeters(42));
             Assert.AreEqual(referenceDistance, Distance.FromCentimeters(4.2));
             Assert.AreEqual(referenceDistance, Distance.FromMeters(0.042));
@@ -52,7 +52,7 @@ namespace AVSenseAndAct.Tests
         [TestMethod]
         public void AdditionTest()
         {
-            var result = 42.Millimeters();
+            Distance result = 42.Millimeters();
             Assert.AreEqual(result, 20.Millimeters() + 22.Millimeters());
             Assert.AreEqual(result, 32.Millimeters() + 10.Millimeters());
         }
@@ -68,7 +68,7 @@ namespace AVSenseAndAct.Tests
         [TestMethod]
         public void MultiplicationTest()
         {
-            var result = 42.Millimeters();
+            Distance result = 42.Millimeters();
             Assert.AreEqual(result, 2 * 21.Millimeters());
             Assert.AreEqual(result, 21.Millimeters() * 2);
         }
@@ -76,9 +76,41 @@ namespace AVSenseAndAct.Tests
         [TestMethod]
         public void DivisionTest()
         {
-            var result = 42.Millimeters();
+            Distance result = 42.Millimeters();
             Assert.AreEqual(result, 84.Millimeters() / 2);
             Assert.AreEqual(result, 126.Millimeters() / 3);
+        }
+
+        [TestMethod]
+        public void LesserTest()
+        {
+            Assert.IsTrue (1.Millimeters() < 2.Millimeters());
+            Assert.IsFalse(2.Millimeters() < 2.Millimeters());
+            Assert.IsFalse(3.Millimeters() < 2.Millimeters());
+        }
+
+        [TestMethod]
+        public void LesserEqualTest()
+        {
+            Assert.IsTrue(1.Millimeters() <= 2.Millimeters());
+            Assert.IsTrue(2.Millimeters() <= 2.Millimeters());
+            Assert.IsFalse(3.Millimeters() <= 2.Millimeters());
+        }
+
+        [TestMethod]
+        public void GreaterEqualTest()
+        {
+            Assert.IsFalse(1.Millimeters() >= 2.Millimeters());
+            Assert.IsTrue(2.Millimeters() >= 2.Millimeters());
+            Assert.IsTrue(3.Millimeters() >= 2.Millimeters());
+        }
+
+        [TestMethod]
+        public void GreaterTest()
+        {
+            Assert.IsFalse(1.Millimeters() > 2.Millimeters());
+            Assert.IsFalse(2.Millimeters() > 2.Millimeters());
+            Assert.IsTrue(3.Millimeters() > 2.Millimeters());
         }
     }
 }

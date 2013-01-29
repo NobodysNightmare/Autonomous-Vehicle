@@ -8,19 +8,19 @@ namespace AutonomousVehicle.SenseAndAct.Distance
 {
     public class ImmediateDistanceSensorCollection : IDistanceCollection
     {
-        public int ClosestDistanceInMillimeters
+        public Distance ClosestDistance
         {
             get
             {
-                return Sensors.Min(sensor => sensor.GetDistance());
+                return Sensors.Min(sensor => sensor.GetDistance().Millimeters());
             }
         }
 
-        public int FarthestDistanceInMillimeters
+        public Distance FarthestDistance
         {
             get
             {
-                return Sensors.Max(sensor => sensor.GetDistance());
+                return Sensors.Max(sensor => sensor.GetDistance().Millimeters());
             }
         }
 

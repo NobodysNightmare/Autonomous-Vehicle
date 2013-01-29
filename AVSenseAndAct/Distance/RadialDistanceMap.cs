@@ -8,7 +8,7 @@ namespace AutonomousVehicle.SenseAndAct.Distance
     public class RadialDistanceMeasure
     {
         public double Angle { get; private set; }
-        public int DistanceInMillimeters { get; internal set; }
+        public Distance Distance { get; internal set; }
         public RadialDistanceMeasure LeftNeighbour { get; internal set; }
         public RadialDistanceMeasure RightNeighbour { get; internal set; }
 
@@ -30,19 +30,19 @@ namespace AutonomousVehicle.SenseAndAct.Distance
         public RadialDistanceMeasure Left { get; private set; }
         public RadialDistanceMeasure Right { get; private set; }
 
-        public int ClosestDistanceInMillimeters
+        public Distance ClosestDistance
         {
             get
             {
-                return this.Min(measure => measure.DistanceInMillimeters);
+                return this.Min(measure => measure.Distance);
             }
         }
 
-        public int FarthestDistanceInMillimeters
+        public Distance FarthestDistance
         {
             get
             {
-                return this.Max(measure => measure.DistanceInMillimeters);
+                return this.Max(measure => measure.Distance);
             }
         }
 

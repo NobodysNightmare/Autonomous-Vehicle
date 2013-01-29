@@ -63,7 +63,7 @@ namespace AutonomousVehicle.SenseAndAct.Distance
             ServoBrick.SetPosition(ServoId, leftLimit);
         }
 
-        private void ServoApproached(byte servoId, short position)
+        private void ServoApproached(BrickServo sender, byte servoId, short position)
         {
             if (servoId != ServoId)
                 return;
@@ -74,7 +74,7 @@ namespace AutonomousVehicle.SenseAndAct.Distance
         private void PerformMeasurement()
         {
             var measure = NextMeasure;
-            measure.DistanceInMillimeters = DistanceSensor.GetDistance();
+            measure.Distance = DistanceSensor.GetDistance().Millimeters();
             ContinueTraversal();
             OnUpdatedMeasure(new UpdatedMeasureEventArgs(measure));
         }

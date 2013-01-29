@@ -7,7 +7,7 @@ namespace AutonomousVehicle.SenseAndAct.Distance
 {
     public interface IDistanceCollection
     {
-        int ClosestDistanceInMillimeters {get;}
-        int FarthestDistanceInMillimeters { get; }
+        Distance ClosestDistance {get;}
+        Distance FarthestDistance { get; }
     }
 }

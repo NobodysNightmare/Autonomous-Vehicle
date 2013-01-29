@@ -8,14 +8,14 @@ namespace AutonomousVehicle.GUI
 {
     class DummyDistanceCollection : IDistanceCollection
     {
-        public int ClosestDistanceInMillimeters
+        public Distance ClosestDistance
         {
-            get { return 0; }
+            get { return 0.Millimeters(); }
         }
 
-        public int FarthestDistanceInMillimeters
+        public Distance FarthestDistance
         {
-            get { return 0; }
+            get { return 0.Millimeters(); }
         }
     }
 }

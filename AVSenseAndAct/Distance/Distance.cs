@@ -68,6 +68,26 @@ namespace AutonomousVehicle.SenseAndAct.Distance
             return new Distance(left.InMillimeters / right);
         }
 
+        public static bool operator <(Distance left, Distance right)
+        {
+            return left.InMillimeters < right.InMillimeters;
+        }
+
+        public static bool operator <=(Distance left, Distance right)
+        {
+            return left.InMillimeters <= right.InMillimeters;
+        }
+
+        public static bool operator >(Distance left, Distance right)
+        {
+            return left.InMillimeters > right.InMillimeters;
+        }
+
+        public static bool operator >=(Distance left, Distance right)
+        {
+            return left.InMillimeters >= right.InMillimeters;
+        }
+
         public static Distance FromMillimeters(int millimeters)
         {
             return new Distance(millimeters);

@@ -12,8 +12,10 @@ namespace AutonomousVehicle.SenseAndAct.Driving
     {
         public double ForwardVelocity { get; set; }
         public double ReverseVelocity { get; set; }
-        public int MinimumDrivingDistance { get; set; }
-        public int ReversalDistance { get; set; }
+
+        //FIXME: why does this need full qualification?
+        public AutonomousVehicle.SenseAndAct.Distance.Distance MinimumDrivingDistance { get; set; }
+        public AutonomousVehicle.SenseAndAct.Distance.Distance ReversalDistance { get; set; }
 
         public double RefreshInterval
         {
@@ -45,8 +47,8 @@ namespace AutonomousVehicle.SenseAndAct.Driving
         {
             ForwardVelocity = 1.0;
             ReverseVelocity = 1.0;
-            MinimumDrivingDistance = 120;
-            ReversalDistance = 0;
+            MinimumDrivingDistance = 12.Centimeters();
+            ReversalDistance = 0.Centimeters();
         }
 
         public void Start()
@@ -65,7 +67,7 @@ namespace AutonomousVehicle.SenseAndAct.Driving
 
         private void TakeDrivingDecisions(object sender, ElapsedEventArgs e)
         {
-            var distance = Distances.ClosestDistanceInMillimeters;
+            var distance = Distances.ClosestDistance;
 
             if (distance >= MinimumDrivingDistance)
             {

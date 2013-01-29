@@ -32,12 +32,12 @@ namespace AVControl
 
         private void InitializeDevices()
         {
-            ServoBrick = new BrickServo("ap6zRki6edN");
-            DistanceBricklet = new BrickletDistanceIR("8XU");
-            Connection = new IPConnection("localhost", 4223);
+            Connection = new IPConnection();
+            Connection.Connect("localhost", 4223);
+            
             try
             {
-                Connection.AddDevice(ServoBrick);
+                ServoBrick = new BrickServo("ap6zRki6edN", Connection);
                 SetupServoBrick();
             }
             catch (Tinkerforge.TimeoutException)
@@ -47,7 +47,7 @@ namespace AVControl
 
             try
             {
-                Connection.AddDevice(DistanceBricklet);
+                DistanceBricklet = new BrickletDistanceIR("8XU", Connection);
                 SetupDistanceBricklet();
             }
             catch (Tinkerforge.TimeoutException)
@@ -56,10 +56,10 @@ namespace AVControl
             }
 
             var drivingStrategy = new SimpleDistanceDrivingStrategy(Engine, Distances);
-            drivingStrategy.MinimumDrivingDistance = 300;
-            drivingStrategy.ReversalDistance = 110;
+            drivingStrategy.MinimumDrivingDistance = 30.Centimeters();
+            drivingStrategy.ReversalDistance = 11.Centimeters();
+            drivingStrategy.RefreshInterval = 10;
             this.DrivingStrategy = drivingStrategy;
-            drivingStrategy.RefreshInterval = 50;
         }
 
         private void SetupServoBrick()
@@ -67,8 +67,13 @@ namespace AVControl
             ServoBrick.SetDegree(0, -4500, 4500);
             ServoBrick.SetVelocity(0, 40000);
 
-            ServoBrick.SetDegree(3, -500, 1000);
-            ServoBrick.SetVelocity(3, 40000);
+
+            short escMax = 700;
+            short escMin = -300;
+            ServoBrick.SetDegree(3, escMin, escMax);
+            ServoBrick.SetVelocity(3, ushort.MaxValue);
+            ForwardSpeedBar.Maximum = escMax;
+            BackwardSpeedBar.Maximum = Math.Abs(escMin);
 
             Engine = new SimpleServoEngine(ServoBrick, 3);
             Engine.MaximumForwardSpeed = (short)ForwardSpeedBar.Value;
@@ -94,7 +99,6 @@ namespace AVControl
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             DrivingStrategy.Stop();
-            Connection.Destroy();
         }
 
         private void StartButton_Click(object sender, EventArgs e)
@@ -111,18 +115,18 @@ namespace AVControl
         {
             VoltageLabel.Text = string.Format("{0} mV", ServoBrick.GetExternalInputVoltage());
             CurrentLabel.Text = string.Format("{0} mA", ServoBrick.GetOverallCurrent());
-            MinDistanceLabel.Text = string.Format("{0} mm", Distances.ClosestDistanceInMillimeters);
+            MinDistanceLabel.Text = string.Format("{0} mm", Distances.ClosestDistance);
         }
 
         private void ForwardSpeedBar_Scroll(object sender, EventArgs e)
         {
-            ForwardSpeedLabel.Text = string.Format("{0} %", ForwardSpeedBar.Value / 10.0);
+            ForwardSpeedLabel.Text = string.Format("{0} %", Math.Round(ForwardSpeedBar.Value / 7.0, 1));
             Engine.MaximumForwardSpeed = (short)ForwardSpeedBar.Value;
         }
 
         private void BackwardSpeedBar_Scroll(object sender, EventArgs e)
         {
-            BackwardSpeedLabel.Text = string.Format("{0} %", BackwardSpeedBar.Value / 5.0);
+            BackwardSpeedLabel.Text = string.Format("{0} %", Math.Round(BackwardSpeedBar.Value / 3.0, 1));
             Engine.MaximumBackwardSpeed = (short)-BackwardSpeedBar.Value;
         }
     }

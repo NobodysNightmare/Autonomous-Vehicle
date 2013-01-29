@@ -61,7 +61,7 @@ namespace AutonomousVehicle.UserControls
             Point lastPosition = Point.Empty;
             foreach (var currentMeasure in DistanceMap)
             {
-                var currentPosition = GetPolarPosition(currentMeasure.Angle, currentMeasure.DistanceInMillimeters);
+                var currentPosition = GetPolarPosition(currentMeasure.Angle, currentMeasure.Distance.InMillimeters);
                 if (lastPosition != Point.Empty)
                 {
                     e.Graphics.DrawLine(Pens.Black, lastPosition, currentPosition);
