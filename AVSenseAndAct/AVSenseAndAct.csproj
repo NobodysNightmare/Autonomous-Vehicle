@@ -45,8 +45,9 @@
   <ItemGroup>
     <Compile Include="Distance\Distance.cs" />
     <Compile Include="Distance\DistanceExtensions.cs" />
-    <Compile Include="Distance\IDistanceCollection.cs" />
-    <Compile Include="Distance\SimpleDistanceCollection.cs" />
+    <Compile Include="Distance\IDistanceSensor.cs" />
+    <Compile Include="Distance\ImmediateDistanceIRSensor.cs" />
+    <Compile Include="Distance\ClosestDistanceSensorCollection.cs" />
     <Compile Include="Driving\IDrivingStrategy.cs" />
     <Compile Include="Driving\IEngine.cs" />
     <Compile Include="Driving\SimpleServoEngine.cs" />

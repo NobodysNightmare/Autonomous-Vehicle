@@ -21,7 +21,7 @@ namespace AVControl
         private BrickServo ServoBrick;
         private BrickletDistanceIR DistanceBricklet;
 
-        private IDistanceCollection Distances;
+        private IDistanceSensor Distances;
         private SimpleServoEngine Engine;
 
         public Form1()
@@ -35,25 +35,12 @@ namespace AVControl
             Connection = new IPConnection();
             Connection.Connect("localhost", 4223);
             
-            try
-            {
-                ServoBrick = new BrickServo("ap6zRki6edN", Connection);
-                SetupServoBrick();
-            }
-            catch (Tinkerforge.TimeoutException)
-            {
-                //TODO: some kind of dummy servo-brick would be neat
-            }
-
-            try
-            {
-                DistanceBricklet = new BrickletDistanceIR("8XU", Connection);
-                SetupDistanceBricklet();
-            }
-            catch (Tinkerforge.TimeoutException)
-            {
-                Distances = new DummyDistanceCollection();
-            }
+            ServoBrick = new BrickServo("ap6zRki6edN", Connection);
+            SetupServoBrick();
+            DistanceBricklet = new BrickletDistanceIR("8XU", Connection);
+            var distanceCollection = new ClosestDistanceSensorCollection();
+            distanceCollection.AddSensor(new ImmediateDistanceIRSensor(DistanceBricklet));
+            Distances = distanceCollection;
 
             var drivingStrategy = new SimpleDistanceDrivingStrategy(Engine, Distances);
             drivingStrategy.MinimumDrivingDistance = 30.Centimeters();
@@ -84,18 +71,6 @@ namespace AVControl
             BackwardSpeedBar.Enabled = true;
         }
 
-        private void SetupDistanceBricklet()
-        {
-            //DistanceMapForm.DistanceMap = new RadialDistanceMap(-45, 45, 1);
-            //var sensor = new RadialDistanceSensor(DistanceMapForm.DistanceMap, ServoBrick, 0, distBricklet);
-            //DistanceMapForm.EnableSensorIndicator(sensor);
-
-            //Distances = DistanceMapForm.DistanceMap;
-            var distances = new ImmediateDistanceSensorCollection();
-            distances.AddSensor(DistanceBricklet);
-            Distances = distances;
-        }
-
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             DrivingStrategy.Stop();
@@ -115,7 +90,7 @@ namespace AVControl
         {
             VoltageLabel.Text = string.Format("{0} mV", ServoBrick.GetExternalInputVoltage());
             CurrentLabel.Text = string.Format("{0} mA", ServoBrick.GetOverallCurrent());
-            MinDistanceLabel.Text = string.Format("{0} mm", Distances.ClosestDistance);
+            MinDistanceLabel.Text =  Distances.Distance.ToString();
         }
 
         private void ForwardSpeedBar_Scroll(object sender, EventArgs e)

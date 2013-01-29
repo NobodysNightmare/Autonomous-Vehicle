@@ -19,12 +19,12 @@ namespace AutonomousVehicle.SenseAndAct.Distance
 
         private BrickServo ServoBrick;
         private byte ServoId;
-        private BrickletDistanceIR DistanceSensor;
+        private IDistanceSensor DistanceSensor;
 
         private RadialDistanceMeasure NextMeasure;
         private TraversalDirection Direction;
 
-        public RadialDistanceSensor(RadialDistanceMap targetMap, BrickServo servoBrick, byte servoId, BrickletDistanceIR distanceBricklet)
+        public RadialDistanceSensor(RadialDistanceMap targetMap, BrickServo servoBrick, byte servoId, IDistanceSensor distanceBricklet)
         {
             Measurements = targetMap;
             ServoId = servoId;
@@ -74,7 +74,7 @@ namespace AutonomousVehicle.SenseAndAct.Distance
         private void PerformMeasurement()
         {
             var measure = NextMeasure;
-            measure.Distance = DistanceSensor.GetDistance().Millimeters();
+            measure.Distance = DistanceSensor.Distance;
             ContinueTraversal();
             OnUpdatedMeasure(new UpdatedMeasureEventArgs(measure));
         }

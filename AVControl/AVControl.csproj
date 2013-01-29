@@ -50,7 +50,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DummyDistanceCollection.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

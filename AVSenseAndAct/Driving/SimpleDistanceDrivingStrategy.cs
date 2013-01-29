@@ -30,14 +30,14 @@ namespace AutonomousVehicle.SenseAndAct.Driving
         }
 
         private IEngine Engine;
-        private IDistanceCollection Distances;
+        private IDistanceSensor DistanceSensor;
 
         private Timer RefreshTimer;
 
-        public SimpleDistanceDrivingStrategy(IEngine engine, IDistanceCollection distances)
+        public SimpleDistanceDrivingStrategy(IEngine engine, IDistanceSensor distanceSensor)
         {
             Engine = engine;
-            Distances = distances;
+            DistanceSensor = distanceSensor;
             InitializePropertyDefaults();
             RefreshTimer = new Timer(100);
             RefreshTimer.Elapsed += TakeDrivingDecisions;
@@ -67,7 +67,7 @@ namespace AutonomousVehicle.SenseAndAct.Driving
 
         private void TakeDrivingDecisions(object sender, ElapsedEventArgs e)
         {
-            var distance = Distances.ClosestDistance;
+            var distance = DistanceSensor.Distance;
 
             if (distance >= MinimumDrivingDistance)
             {

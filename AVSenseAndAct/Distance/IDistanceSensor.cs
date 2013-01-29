@@ -5,9 +5,8 @@ using System.Text;
 
 namespace AutonomousVehicle.SenseAndAct.Distance
 {
-    public interface IDistanceCollection
+    public interface IDistanceSensor
     {
-        Distance ClosestDistance {get;}
-        Distance FarthestDistance { get; }
+        Distance Distance { get; }
     }
 }

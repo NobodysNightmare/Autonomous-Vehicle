@@ -25,7 +25,7 @@ namespace AutonomousVehicle.SenseAndAct.Distance
         }
     }
 
-    public class RadialDistanceMap : IEnumerable<RadialDistanceMeasure>, IDistanceCollection
+    public class RadialDistanceMap : IEnumerable<RadialDistanceMeasure>
     {
         public RadialDistanceMeasure Left { get; private set; }
         public RadialDistanceMeasure Right { get; private set; }
