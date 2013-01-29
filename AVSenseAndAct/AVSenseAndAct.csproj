@@ -43,6 +43,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Distance\CachedDistanceIRSensor.cs" />
     <Compile Include="Distance\Distance.cs" />
     <Compile Include="Distance\DistanceExtensions.cs" />
     <Compile Include="Distance\IDistanceSensor.cs" />
