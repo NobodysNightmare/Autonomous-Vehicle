@@ -1,11 +1,6 @@
 
 *.vsmdi
 *.suo
-/AVSenseAndAct/bin
-/AVSenseAndAct/obj
-/AVLab/bin
-/AVLab/obj
-/AVForms/bin
-/AVForms/obj
-/AVControl/bin
-/AVControl/obj
+bin
+obj
+/TestResults
